@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:13
+    volumes:
+      - ./migrations/create.sql:/docker-entrypoint-initdb.d/create.sql
+    environment:
+      POSTGRES_DB: "cinematheque"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+    ports:
+      - "5432:5432"
+    networks:
+      - cinematheque
+  cinematheque-service:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - cinematheque
+networks:
+  cinematheque:
+      driver: bridge
