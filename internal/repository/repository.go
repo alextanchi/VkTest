@@ -48,10 +48,6 @@ func ConnectDb() (*sql.DB, error) {
 		return nil, err
 	}
 	log.Println("подключились к БД")
-	db.SetConnMaxIdleTime(0)
-	db.SetConnMaxLifetime(0)
-	db.SetMaxIdleConns(10)
-	db.SetMaxOpenConns(10)
 
 	return db, nil
 }
